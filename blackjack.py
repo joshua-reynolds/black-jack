@@ -29,6 +29,21 @@ class Dealer(cards.Deck): # inheritance
         #print('Drew a {} of {}'.format(card.number, card.suit))
         return card    
  
+class Player(cards.Player):  
+    def __init__(self, name):
+        self.name = name
+        self.hand = []
+        
+        # for splitting
+        self.hand_s1 = []
+        self.hand_s2 = []
+    
+    def split_hand():
+        if len(self.hand) == 2:
+            self.hand_s1.append(self.hand[0])
+            self.hand_s2.append(self.hand[1])
+            return [self.hand_s1, self.hand_s2]
+
     
     
 def tally_cards(hand):
@@ -87,7 +102,7 @@ if __name__ == "__main__":
         
         # create entities
         dealer = Dealer()    
-        players = [cards.Player("Josh"), cards.Player("Brenda"), cards.Player("Wiz Khalifa")]
+        players = [Player("Josh"), Player("Brenda"), Player("Wiz Khalifa")]
         
         winners = []
         losers = []
@@ -176,5 +191,8 @@ if __name__ == "__main__":
                 stand = True  
                 
                 
+        # check for winners
+        
+        
         
         game_status = 1
