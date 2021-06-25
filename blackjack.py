@@ -113,6 +113,7 @@ if __name__ == "__main__":
             player.add_card(dealer.deal_a_card())
         
         dealer.add_card(dealer.deal_a_card())
+        time.sleep(5)
         
         # deal second card 
         print('Dealing second card...\n')
@@ -120,6 +121,7 @@ if __name__ == "__main__":
             player.add_card(dealer.deal_a_card())
         
         dealer.add_card(dealer.deal_a_card())
+        time.sleep(5)
         
         # show dealers first card
         dealer.show_first()
@@ -192,7 +194,29 @@ if __name__ == "__main__":
                 
                 
         # check for winners
+        print('\n')
+        print('#'*20)
+        print('\n')
         
+        for player in players:
+            
+            if tally_cards(player.hand)[0] > 21:
+                print('PLAYER {} busted, Dealer wins'.format(player.name))
+            
+            elif tally_cards(dealer.hand)[0] > 21:
+                print('Dealer busted, PLAYER {} wins'.format(player.name))
+                
+            elif tally_cards(dealer.hand)[0] == tally_cards(player.hand)[0]:
+                print('PLAYER {} tied with the Dealer, push'.format(player.name))
+                
+            elif tally_cards(dealer.hand)[0] > tally_cards(player.hand)[0]:
+                print('The Dealer beat PLAYER {}'.format(player.name))
+                
+            elif tally_cards(dealer.hand)[0] < tally_cards(player.hand)[0]:
+                print('PLAYER {} wins!'.format(player.name))            
+            
+                
+            
         
         
         game_status = 1
