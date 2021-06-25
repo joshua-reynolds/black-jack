@@ -1,6 +1,22 @@
 import cards
 import random
 import time
+import sys
+
+# this makes the text appear at the proper time
+# https://stackoverflow.com/questions/107705/disable-output-buffering
+class Unbuffered(object):
+    def __init__(self, stream):
+        self.stream = stream
+    def write(self, data):
+        self.stream.write(data)
+        self.stream.flush()
+    def writelines(self, datas):
+        self.stream.writelines(datas)
+        self.stream.flush()
+    def __getattr__(self, attr):
+        return getattr(self.stream, attr)
+
 
 class Dealer(cards.Deck): # inheritance
     def __init__(self):
@@ -88,17 +104,14 @@ def tally_cards(hand):
 
 if __name__ == "__main__":
     
-    game_status = 0
+    # this makes the text appear at the proper time
+    sys.stdout = Unbuffered(sys.stdout)
     
-    ## test tally
-    #deck = Dealer()
-    #deck.shuffle()
-    #hand = [deck.deal_a_card(), deck.deal_a_card(), deck.deal_a_card()]
-    #results = tally_cards(hand)
-    #print(results)
+    play_again = 1
     
     
-    while game_status == 0:
+    
+    while play_again == 1:
         
         # create entities
         dealer = Dealer()    
@@ -113,7 +126,7 @@ if __name__ == "__main__":
             player.add_card(dealer.deal_a_card())
         
         dealer.add_card(dealer.deal_a_card())
-        time.sleep(5)
+        time.sleep(3)
         
         # deal second card 
         print('Dealing second card...\n')
@@ -121,7 +134,7 @@ if __name__ == "__main__":
             player.add_card(dealer.deal_a_card())
         
         dealer.add_card(dealer.deal_a_card())
-        time.sleep(5)
+        time.sleep(3)
         
         # show dealers first card
         dealer.show_first()
@@ -153,7 +166,7 @@ if __name__ == "__main__":
                         print(results[0])
                         print('\n') 
                         if results[0] > 21:
-                            print('Sorry, {} busted!'.format(player.name))
+                            print('Sorry, PLAYER {} busted!'.format(player.name))
                             stand = True
                     
                     elif choice == 's':
@@ -165,6 +178,10 @@ if __name__ == "__main__":
             print('\n')    
         
         # dealer now plays
+        print('\n')
+        print('#'*20)
+        print('\n')
+        
         play_on_soft_17 = True
         dealer.show_hand()
         print(tally_cards(dealer.hand))
@@ -173,7 +190,7 @@ if __name__ == "__main__":
         stand = False        
         while stand == False:
             
-            if play_on_soft_17 == True and tally_cards(dealer.hand)[0] == 17 and tally_cards(dealer.hand)[3] == True:
+            if play_on_soft_17 == True and tally_cards(dealer.hand)[0] == 17 and tally_cards(dealer.hand)[2] == True:
                     dealer.add_card(dealer.deal_a_card())
                     dealer.show_hand()
                     print(tally_cards(dealer.hand))
@@ -186,7 +203,7 @@ if __name__ == "__main__":
                 print('\n') 
                 
             elif tally_cards(dealer.hand)[0] > 21:
-                print('The dealer busted!')
+                print('DEALER busted!')
                 stand = True              
             
             elif tally_cards(dealer.hand)[0] >= 17:
@@ -194,29 +211,32 @@ if __name__ == "__main__":
                 
                 
         # check for winners
-        print('\n')
-        print('#'*20)
-        print('\n')
-        
         for player in players:
             
             if tally_cards(player.hand)[0] > 21:
-                print('PLAYER {} busted, Dealer wins'.format(player.name))
+                print('PLAYER {} busted, DEALER wins'.format(player.name))
             
             elif tally_cards(dealer.hand)[0] > 21:
-                print('Dealer busted, PLAYER {} wins'.format(player.name))
+                print('DEALER busted, PLAYER {} wins'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] == tally_cards(player.hand)[0]:
-                print('PLAYER {} tied with the Dealer, push'.format(player.name))
+                print('PLAYER {} tied with DEALER, push'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] > tally_cards(player.hand)[0]:
-                print('The Dealer beat PLAYER {}'.format(player.name))
+                print('DEALER defeated PLAYER {}'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] < tally_cards(player.hand)[0]:
                 print('PLAYER {} wins!'.format(player.name))            
             
-                
-            
+        # Ask user to "play again"        
+        print('\n')
+        print('#'*20)
+        print('\n')   
         
-        
-        game_status = 1
+        selection = input('Play again? (y) or (n)')
+        if selection == 'y':
+            play_again = 1
+            print('\n')
+        else:
+            play_again = 0
+            print('Goodbye!')
