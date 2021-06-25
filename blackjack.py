@@ -110,7 +110,8 @@ if __name__ == "__main__":
     print('$'*15)
     print('BLACKJACK')
     print('$'*15)
-    print('\n')    
+    print('\n')
+    time.sleep(2)    
     
     play_again = 1
     while play_again == 1:
