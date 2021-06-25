@@ -18,7 +18,7 @@ class Deck:
         self.build_deck()
   
     def build_deck(self):
-        print('building the deck...\n')
+        print('Building the deck...')
         #self.cards.clear() # not available until python 3.3
         del self.cards[:]
     
@@ -27,7 +27,7 @@ class Deck:
                 self.cards.append(Card(suit, number))
     
     def shuffle(self):
-        print('shuffling the cards...\n')
+        print('Shuffling the cards...')
         random.shuffle(self.cards)
            
     def reset_deck(self):

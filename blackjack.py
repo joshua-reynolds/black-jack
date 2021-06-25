@@ -106,11 +106,13 @@ if __name__ == "__main__":
     
     # this makes the text appear at the proper time
     sys.stdout = Unbuffered(sys.stdout)
+
+    print('$'*15)
+    print('BLACKJACK')
+    print('$'*15)
+    print('\n')    
     
     play_again = 1
-    
-    
-    
     while play_again == 1:
         
         # create entities
