@@ -239,4 +239,4 @@ if __name__ == "__main__":
             print('\n')
         else:
             play_again = 0
-            print('Goodbye!')
+            print('Thanks for playing. Goodbye!')

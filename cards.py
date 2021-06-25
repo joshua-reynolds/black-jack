@@ -19,7 +19,9 @@ class Deck:
   
     def build_deck(self):
         print('building the deck...\n')
-        self.cards.clear()
+        #self.cards.clear() # not available until python 3.3
+        del self.cards[:]
+    
         for suit in self.suits:
             for number in self.numbers:
                 self.cards.append(Card(suit, number))
@@ -29,7 +31,8 @@ class Deck:
         random.shuffle(self.cards)
            
     def reset_deck(self):
-        self.cards.clear()
+        #self.cards.clear()
+        del self.cards[:]
         self.build_deck()        
         self.shuffle()
         
@@ -74,7 +77,8 @@ class Player:
         return self.hand
     
     def drop_hand(self):
-        self.hand.clear()
+        #self.hand.clear()
+        del self.hand[:]
         return self.hand
     
     
