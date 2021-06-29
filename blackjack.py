@@ -61,7 +61,7 @@ class Player(cards.Player):
             return [self.hand_s1, self.hand_s2]
 
     
-    
+# something weird happens when a player has two aces, tally never goes past 12 
 def tally_cards(hand):
     hand = [card.number for card in hand]
     faces = [10, 'Jack','Queen','King']
@@ -184,25 +184,31 @@ if __name__ == "__main__":
         print('\n')
         print('#'*20)
         print('\n')
-        
+        print('Revealing DEALER cards...')
+             
         play_on_soft_17 = True
         dealer.show_hand()
         print(tally_cards(dealer.hand))
+        time.sleep(2)   
         print('\n') 
         
         stand = False        
         while stand == False:
             
+            
+            
             if play_on_soft_17 == True and tally_cards(dealer.hand)[0] == 17 and tally_cards(dealer.hand)[2] == True:
                     dealer.add_card(dealer.deal_a_card())
                     dealer.show_hand()
                     print(tally_cards(dealer.hand))
+                    time.sleep(2)   
                     print('\n')            
                         
             elif tally_cards(dealer.hand)[0] < 17:
                 dealer.add_card(dealer.deal_a_card())
                 dealer.show_hand()
                 print(tally_cards(dealer.hand))
+                time.sleep(2)   
                 print('\n') 
                 
             elif tally_cards(dealer.hand)[0] > 21:
@@ -220,7 +226,7 @@ if __name__ == "__main__":
                 print('PLAYER {} busted, DEALER wins'.format(player.name))
             
             elif tally_cards(dealer.hand)[0] > 21:
-                print('DEALER busted, PLAYER {} wins'.format(player.name))
+                print('PLAYER {} wins'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] == tally_cards(player.hand)[0]:
                 print('PLAYER {} tied with DEALER, push'.format(player.name))
