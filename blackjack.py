@@ -291,3 +291,4 @@ if __name__ == "__main__":
         else:
             play_again = 0
             print('Thanks for playing. Goodbye!')
+            time.sleep(2) 
