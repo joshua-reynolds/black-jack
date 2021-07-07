@@ -211,8 +211,11 @@ if __name__ == "__main__":
                         print(results[0])
                         print('\n') 
                         if results[0] > 21:
-                            print('Sorry, PLAYER {} busted!'.format(player.name))
+                            print('&'*25)
+                            print('PLAYER {} busted!'.format(player.name))
+                            print('&'*25)
                             stand = True
+                            time.sleep(1) 
                     
                     elif choice == 's':
                         stand = True
@@ -271,13 +274,15 @@ if __name__ == "__main__":
                 print('PLAYER {} won'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] == tally_cards(player.hand)[0]:
-                print('PLAYER {} tied, push'.format(player.name))
+                print('PLAYER {} pushed'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] > tally_cards(player.hand)[0]:
                 print('PLAYER {} lost'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] < tally_cards(player.hand)[0]:
-                print('PLAYER {} won!'.format(player.name))            
+                print('PLAYER {} won!'.format(player.name))  
+
+            time.sleep(1)                 
             
         # Ask user to "play again"        
         print('\n')
