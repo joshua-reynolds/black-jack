@@ -69,9 +69,12 @@ def tally_cards(hand):
     can_split = False
     soft_hand = False
     
+    tally = 0
+    
     # if no cards in hand return 0, shouldn't happen
     if len(hand) == 0:
-        return 0
+        print('ERROR: No cards in the hand')
+        tally = 0
     
     # if two of the same cards are drawn, option to split becomes available
     if len(hand) ==  2:
@@ -84,12 +87,49 @@ def tally_cards(hand):
     # count aces
     number_of_aces = hand.count('Ace')
     
+    # if there are three aces
+    if number_of_aces == 4:
+
+        if len(hand) == 4:
+            tally = 14
+
+        elif len(hand) > 4:
+            hand = [card for card in hand if card != 'Ace']
+            tally = sum(hand) + 14
+
+            if tally > 21:
+                tally = sum(hand) + 4     
+    
+    
+    # if there are three aces
+    elif number_of_aces == 3:
+
+        if len(hand) == 3:
+            tally = 13
+
+        elif len(hand) > 3:
+            hand = [card for card in hand if card != 'Ace']
+            tally = sum(hand) + 13
+
+            if tally > 21:
+                tally = sum(hand) + 3    
+    
+    
     # if there are two aces
-    if number_of_aces == 2:
-        return [12, can_split, soft_hand]
+    elif number_of_aces == 2:
+
+        if len(hand) == 2:
+            tally = 12
+        
+        elif len(hand) > 2:
+            hand = [card for card in hand if card != 'Ace']
+            tally = sum(hand) + 12
+            
+            if tally > 21:
+                tally = sum(hand) + 2
     
     # if only one ace  
-    if number_of_aces == 1:
+    elif number_of_aces == 1:
         
         hand.remove('Ace')
         
@@ -100,7 +140,9 @@ def tally_cards(hand):
             return [sum(hand) + 1, can_split, soft_hand] 
     else:
         hand = [10 if card in faces else card for card in hand]
-        return [sum(hand), can_split, soft_hand]
+        tally = sum(hand)
+    
+    return [tally, can_split, soft_hand]
 
 if __name__ == "__main__":
     
@@ -118,7 +160,7 @@ if __name__ == "__main__":
         
         # create entities
         dealer = Dealer()    
-        players = [Player("Josh"), Player("Brenda"), Player("Wiz Khalifa")]
+        players = [Player("Josh"), Player("Brenda"), Player("Wiz Khalifa"), Player("Nikola Jokic")]
         
         winners = []
         losers = []
@@ -212,30 +254,30 @@ if __name__ == "__main__":
                 print('\n') 
                 
             elif tally_cards(dealer.hand)[0] > 21:
-                print('DEALER busted!')
+                print('DEALER busted!\n')
                 stand = True              
             
             elif tally_cards(dealer.hand)[0] >= 17:
                 stand = True  
                 
                 
-        # check for winners
+        # check for winners DEALER should not play if everyone busts
         for player in players:
             
             if tally_cards(player.hand)[0] > 21:
-                print('PLAYER {} busted, DEALER wins'.format(player.name))
+                print('PLAYER {} lost'.format(player.name))
             
             elif tally_cards(dealer.hand)[0] > 21:
-                print('PLAYER {} wins'.format(player.name))
+                print('PLAYER {} won'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] == tally_cards(player.hand)[0]:
-                print('PLAYER {} tied with DEALER, push'.format(player.name))
+                print('PLAYER {} tied, push'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] > tally_cards(player.hand)[0]:
-                print('DEALER defeated PLAYER {}'.format(player.name))
+                print('PLAYER {} lost'.format(player.name))
                 
             elif tally_cards(dealer.hand)[0] < tally_cards(player.hand)[0]:
-                print('PLAYER {} wins!'.format(player.name))            
+                print('PLAYER {} won!'.format(player.name))            
             
         # Ask user to "play again"        
         print('\n')
