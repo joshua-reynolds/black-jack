@@ -204,7 +204,7 @@ if __name__ == "__main__":
                 else:
                     choice = input('(H)it or (S)tand:')
                     
-                    if choice == 'h':
+                    if choice.lower() == 'h':
                         player.add_card(dealer.deal_a_card())
                         player.show_hand()
                         results = tally_cards(player.hand)
@@ -217,7 +217,7 @@ if __name__ == "__main__":
                             stand = True
                             time.sleep(1) 
                     
-                    elif choice == 's':
+                    elif choice.lower() == 's':
                         stand = True
                         
                     else:
